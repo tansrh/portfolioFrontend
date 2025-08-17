@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./auth/authSlice";
 import toastReducer from "./toast/toastSlice";
 import portfolioReducer from "./portfolio/portfolioSlice";
@@ -10,15 +10,30 @@ import { errorWatcher } from "@/store/watchers";
 import { api } from "./services/api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
+const appReducer = combineReducers({
+  auth: authReducer,
+  toast: toastReducer,
+  portfolio: portfolioReducer,
+  blogs: blogsReducer,
+  modal: modalReducer,
+  [api.reducerPath]: api.reducer,
+});
+const rootReducer = (state: any, action: any) => {
+  if (action.type === "resetStore") {
+    state = {}; 
+  }
+  return appReducer(state, action);
+};
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    toast: toastReducer,
-    portfolio: portfolioReducer,
-    blogs: blogsReducer,
-    modal: modalReducer,
-    [api.reducerPath]: api.reducer,
-  },
+  // reducer: {
+  //   auth: authReducer,
+  //   toast: toastReducer,
+  //   portfolio: portfolioReducer,
+  //   blogs: blogsReducer,
+  //   modal: modalReducer,
+  //   [api.reducerPath]: api.reducer,
+  // },
+  reducer: rootReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(toastLoggerMiddleware).concat(api.middleware),
 });

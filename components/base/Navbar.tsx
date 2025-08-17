@@ -7,6 +7,7 @@ import { RootState, AppDispatch } from "@/store/store";
 import { signoutThunk } from "@/store/auth/authThunks";
 import { addToast } from "@/store/toast/toastSlice";
 import { setUser } from "@/store/auth/authSlice";
+import { api } from "@/store/services/api";
 interface NavItemProps {
     href: string;
     label: string;
@@ -114,8 +115,9 @@ const UserProfileMenu: React.FC = () => {
         if (result.status === 200) {
             dispatch(addToast({ message: result.message }));
             dispatch(setUser(null));
-            router.replace("/");
-            router.refresh();
+            dispatch(api.util.resetApiState());
+            dispatch({ type: "resetStore" });
+            
         } else {
             dispatch(addToast({ message: result.message, isError: true }));
         }
