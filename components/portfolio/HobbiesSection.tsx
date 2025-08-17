@@ -40,7 +40,7 @@ const HobbiesSection: React.FC<HobbiesSectionProps> = ({ hobbies, setHobbies, ed
                     />
                     <PortfolioButton text="Delete" onClick={() => handleDelete(idx)} />
                   </div>
-                  <FieldError text={errors && errors[idx]?.error} />
+                  <FieldError text={errors && errors[idx]} />
                 </div>
               ) : (
                 <span className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded text-gray-700 dark:text-gray-100">{hobby}</span>
@@ -55,4 +55,6 @@ const HobbiesSection: React.FC<HobbiesSectionProps> = ({ hobbies, setHobbies, ed
     </section>
   );
 };
-export default memo(HobbiesSection);
+const MemoizedHobbiesSection = memo(HobbiesSection);
+MemoizedHobbiesSection.displayName = "HobbiesSection";
+export default MemoizedHobbiesSection;

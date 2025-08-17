@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, SIGNIN_URL, SIGNOUT_URL, SIGNUP_URL, USER_URL } from '@/lib/apiEndpoints';
 import { setUser } from './authSlice';
+import { api } from '../services/api';
+import { portfolioApi } from '../services/portfolioApi';
 
 export const signUpThunk = createAsyncThunk(
   'auth/signUp',
@@ -8,7 +10,7 @@ export const signUpThunk = createAsyncThunk(
     try {
       const response = await fetch(SIGNUP_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify(formData),
       });
       const data = await response.json();
@@ -37,6 +39,7 @@ export const signInThunk = createAsyncThunk(
       }
       // Set user in Redux store
       dispatch(setUser(data.data));
+      dispatch(portfolioApi.endpoints.getPortfolios.initiate());
       return { status: 200, message: data.message, data: data.data };
     } catch (error: any) {
       return rejectWithValue({ status: 410, message: error.message ||  'Something went wrong. Please try again later.' });

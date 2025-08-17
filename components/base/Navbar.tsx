@@ -9,27 +9,27 @@ import { addToast } from "@/store/toast/toastSlice";
 interface NavItemProps {
     href: string;
     label: string;
-    handleClick: () => void;
+    handleClick?: () => void;
 }
-const NavItem: React.FC<NavItemProps> = memo(({ href, label, handleClick }) => {
+export const NavItem: React.FC<NavItemProps> = memo(function NavItem({ href, label, handleClick }) {
     const pathname = usePathname();
     const isActive = pathname === href;
     return (
         <Link
             href={href}
             onClick={handleClick}
-            className={`flex items-center box-border border-b-2 ${
-                isActive ? "border-black dark:border-white text-black dark:text-white" : "border-transparent text-gray-700 dark:text-white hover:text-black"
-            }`}
+            className={`flex items-center box-border border-b-2 ${isActive ? "border-black dark:border-white text-black dark:text-white" : "border-transparent text-gray-700 dark:text-white hover:text-black"
+                }`}
             style={{ height: '100%' }}
         >
             {label}
         </Link>
     );
 });
+NavItem.displayName = "NavItem";
 
 // ThemeToggle component
-const ThemeToggle: React.FC = () => {
+export const ThemeToggle: React.FC = () => {
     const [theme, setTheme] = useState<"light" | "dark">(() => {
         if (typeof window !== "undefined") {
             return document.documentElement.classList.contains("dark") ? "dark" : "light";
@@ -92,91 +92,90 @@ const ThemeToggle: React.FC = () => {
 
 // UserProfileMenu component
 const UserProfileMenu: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch<AppDispatch>();
-  const [open, setOpen] = React.useState(false);
-  const menuRef = React.useRef<HTMLDivElement>(null);
+    const user = useSelector((state: RootState) => state.auth.user);
+    const dispatch = useDispatch<AppDispatch>();
+    const [open, setOpen] = React.useState(false);
+    const menuRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+    useEffect(() => {
+        function handleClick(e: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setOpen(false);
+            }
+        }
+        if (open) document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, [open]);
+
+    const handleSignout = async () => {
+        const result: any = await dispatch(signoutThunk()).unwrap();
+        if (result.status === 200) {
+            dispatch(addToast({ message: result.message }));
+        } else {
+            dispatch(addToast({ message: result.message, isError: true }));
+        }
         setOpen(false);
-      }
-    }
-    if (open) document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [open]);
+    };
 
-  const handleSignout = async () => {
-    const result: any = await dispatch(signoutThunk()).unwrap();
-    console.log("Signout result:", result);
-    if (result.status === 200) {
-      dispatch(addToast({ message: result.message }));
-    } else {
-      dispatch(addToast({ message: result.message, isError: true }));
-    }
-    setOpen(false);
-  };
-
-  return (
-    <div className="relative" ref={menuRef}>
-      <button
-        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white cursor-pointer"
-        aria-label="User menu"
-        onClick={() => setOpen((v) => !v)}
-      >
-        {/* User icon */}
-        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-black dark:text-white">
-          <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2" />
-          <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 20c0-3.314 3.134-6 8-6s8 2.686 8 6" />
-        </svg>
-      </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg z-50 p-4 flex flex-col gap-2 min-w-[180px]">
-          {user ? (
-            <>
-              <div className="mb-2">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Welcome,</div>
-                <div className="font-semibold text-gray-900 dark:text-white">{user.name}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">{user.email}</div>
-              </div>
-              <button
-                onClick={handleSignout}
-                className="w-full py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition"
-              >
-                Signout
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="mb-2 text-gray-700 dark:text-gray-200 text-sm">Welcome! <br/>  Please sign in to continue.</div>
-              <Link
-                href="/signin"
-                className="w-full block py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold text-center hover:bg-gray-800 dark:hover:bg-gray-200 transition"
-                onClick={() => setOpen(false)}
-              >
-                Sign In
-              </Link>
-            </>
-          )}
+    return (
+        <div className="relative" ref={menuRef}>
+            <button
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white cursor-pointer"
+                aria-label="User menu"
+                onClick={() => setOpen((v) => !v)}
+            >
+                {/* User icon */}
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-black dark:text-white">
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2" />
+                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 20c0-3.314 3.134-6 8-6s8 2.686 8 6" />
+                </svg>
+            </button>
+            {open && (
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg z-50 p-4 flex flex-col gap-2 min-w-[180px]">
+                    {user ? (
+                        <>
+                            <div className="mb-2">
+                                <div className="text-sm text-gray-500 dark:text-gray-400">Welcome,</div>
+                                <div className="font-semibold text-gray-900 dark:text-white">{user.name}</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">{user.email}</div>
+                            </div>
+                            <button
+                                onClick={handleSignout}
+                                className="w-full py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition"
+                            >
+                                Signout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <div className="mb-2 text-gray-700 dark:text-gray-200 text-sm">Welcome! <br />  Please sign in to continue.</div>
+                            <Link
+                                href="/signin"
+                                className="w-full block py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold text-center hover:bg-gray-800 dark:hover:bg-gray-200 transition"
+                                onClick={() => setOpen(false)}
+                            >
+                                Sign In
+                            </Link>
+                        </>
+                    )}
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{navItems: NavItemProps[]}> = ({navItems=[]}) => {
     const [loading, setLoading] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
-
+    const pathname = usePathname();
     const handleNav = useCallback(() => {
         setLoading(true);
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             setLoading(false);
             timeoutRef.current = null;
-        }, 800);
+        }, 1200);
         setDrawerOpen(false); // close drawer on nav
     }, []);
 
@@ -215,13 +214,18 @@ const Navbar: React.FC = () => {
     }, [drawerOpen]);
 
     return (
-        <nav className="w-full px-4 bg-white dark:bg-black border-b border-gray-200 flex flex-col items-stretch justify-between relative z-30">
+        <nav className="w-full px-4 bg-white dark:bg-black border-b border-gray-200 flex flex-col items-stretch justify-between  z-30 fixed">
             <div className="flex justify-between h-12 w-full py-0 items-center">
                 {/* Desktop nav */}
                 <div className="hidden md:flex h-full items-stretch space-x-4 leading-8">
-                    <NavItem href="/" label="Home" handleClick={handleNav} />
+                    {/* <NavItem href="/" label="Home" handleClick={handleNav} />
                     <NavItem href="/about" label="About" handleClick={handleNav} />
-                    <NavItem href="/contact" label="Contact" handleClick={handleNav} />
+                    <NavItem href="/contact" label="Contact" handleClick={handleNav} /> */}
+                    {
+                        navItems?.map((item, index) => (
+                            <NavItem key={index} href={item.href} label={item.label} handleClick={item.handleClick ?? handleNav} />
+                        ))
+                    }
                 </div>
                 {/* Hamburger for mobile */}
                 <button
@@ -235,8 +239,8 @@ const Navbar: React.FC = () => {
                     </svg>
                 </button>
                 <div className="flex items-center space-x-2">
-                  <ThemeToggle />
-                  <UserProfileMenu />
+                    <ThemeToggle />
+                   {!pathname?.startsWith("/u/") && <UserProfileMenu /> }
                 </div>
             </div>
             {/* Drawer overlay */}
@@ -262,16 +266,22 @@ const Navbar: React.FC = () => {
                             </svg>
                         </button>
                         <nav className="flex flex-col gap-6 mt-8">
-                            <NavItem href="/" label="Home" handleClick={handleNav} />
+                            {/* <NavItem href="/" label="Home" handleClick={handleNav} />
                             <NavItem href="/about" label="About" handleClick={handleNav} />
-                            <NavItem href="/contact" label="Contact" handleClick={handleNav} />
+                            <NavItem href="/contact" label="Contact" handleClick={handleNav} /> */}
+                            {
+                                navItems?.map((item, index) => (
+                                    <NavItem key={index} href={item.href} label={item.label} handleClick={item.handleClick ?? handleNav} />
+                                ))
+                            }
                         </nav>
                     </aside>
                 </>
             )}
             {/* Simple loading bar */}
             {loading && (
-                <div className="absolute left-0 bottom-0 h-1 w-full bg-black dark:bg-white animate-navbar-progress" />
+                // <div className="absolute left-0 bottom-0 h-1 w-full bg-black dark:bg-white animate-navbar-progress" />
+                <Loader />
             )}
             {/* Drawer slide-in animation */}
             <style jsx global>{`
@@ -286,5 +296,7 @@ const Navbar: React.FC = () => {
         </nav>
     );
 };
-
+export const Loader = () => (
+    <div className="absolute left-0 bottom-0 h-1 w-full bg-black dark:bg-white animate-navbar-progress" />
+)
 export default Navbar;

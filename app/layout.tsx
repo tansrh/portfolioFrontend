@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/base/Navbar";
-import Footer from "@/components/base/Footer";
+import Wrapper from "@/components/base/Wrapper";
+import Modal from "@/components/common/Modal";
 import Providers from "@/components/base/Providers";
-import Toast from "@/components/common/Toast";
 const inter = Inter({ subsets: ["latin"] });
 
 const geistSans = Geist({
@@ -34,12 +33,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${inter.className} flex flex-col min-h-screen `}
       >
         <Providers>
+        <Modal />
+        {/* <Providers>
           <Navbar />
           <Toast />
+          <Modal/>
           <main className="flex-1 w-full justify-center items-center">
             {children}
           </main>
           <Footer />
+        </Providers> */}
+        <Wrapper>
+          {children}
+        </Wrapper>
         </Providers>
       </body>
     </html>

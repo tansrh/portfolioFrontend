@@ -1,5 +1,10 @@
+/* Force JoditEditor text color to always be dark, regardless of theme */
+.jodit-wysiwyg, .jodit-wysiwyg * {
+  color: #222 !important;
+}
 @import "tailwindcss";
 @import "tw-animate-css";
+
 
 @custom-variant dark (&:is(.dark *));
 

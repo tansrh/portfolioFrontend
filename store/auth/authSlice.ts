@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { autoLoginThunk, forgotPasswordThunk, resetPasswordThunk, signInThunk, signoutThunk, signUpThunk } from "./authThunks";
+import { Blog } from "../blogs/blogsSlice";
 
 interface User {
-    id: string;
+    id: number;
     email: string;
     name: string;
     isVerified: boolean;
+    blogs: Blog[]
 }
 
 interface AuthState {

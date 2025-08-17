@@ -61,5 +61,6 @@ const ToastItem: React.FC<{ id: string; message: string; duration: number; isErr
     </div>
   );
 });
+ToastItem.displayName = "ToastItem";
 
 export default Toast;

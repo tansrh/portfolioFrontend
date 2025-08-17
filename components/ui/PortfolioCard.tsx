@@ -1,6 +1,9 @@
 'use client';
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/store";
+import { setSelectedPortfolio } from "@/store/portfolio/portfolioSlice";
+import { formatDayMonthYear } from "@/lib/utils";
 
 interface PortfolioCardProps {
   id: number;
@@ -9,10 +12,13 @@ interface PortfolioCardProps {
   updatedAt: string;
 }
 
-const PortfolioCard: React.FC<PortfolioCardProps> = ({ id, title, description, updatedAt }) => {
+const PortfolioCard: React.FC<PortfolioCardProps & any> = ({ id, title, description, updatedAt, ...rest }) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const handleClick = () => {
-    router.push(`/dashboard/${id}`);
+    const selected = { id, title, description, updatedAt, ...rest };
+    dispatch(setSelectedPortfolio(selected));
+    router.push(`/dashboard/read`);
   };
   return (
     <div
@@ -21,8 +27,8 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({ id, title, description, u
     >
       <div>
         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-1">{title}</h2>
-        <p className="text-gray-600 dark:text-gray-200 mb-2">{description}</p>
-        <span className="text-xs text-gray-400 dark:text-gray-200">Last updated: {updatedAt}</span>
+        <p className="text-gray-600 dark:text-gray-200 mb-2" dangerouslySetInnerHTML={{ __html: description }} />
+        <span className="text-xs text-gray-400 dark:text-gray-200">Last updated: {formatDayMonthYear(updatedAt)}</span>
       </div>
     </div>
   );

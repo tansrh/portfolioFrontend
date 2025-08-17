@@ -1,3 +1,4 @@
+"use client";
 import React, { memo } from "react";
 import PortfolioButton from "./PortfolioButton";
 import CommonTextInput from "./CommonTextInput";
@@ -61,7 +62,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ achievements,
             ) : (
               <>
                 <div className="font-bold text-gray-700 dark:text-gray-200">{ach.title}</div>
-                <div className="text-gray-600 dark:text-gray-300 mb-1">{ach.description}</div>
+                <div className="text-gray-600 dark:text-gray-300 mb-1" dangerouslySetInnerHTML={{ __html: ach.description }} />
                 {ach.date && <div className="text-xs text-gray-400 dark:text-gray-400">{ach.date}</div>}
               </>
             )}
@@ -75,4 +76,6 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ achievements,
   );
 };
 
-export default memo(AchievementsSection);
+const MemoizedAchievementsSection = memo(AchievementsSection);
+MemoizedAchievementsSection.displayName = "AchievementsSection";
+export default MemoizedAchievementsSection;

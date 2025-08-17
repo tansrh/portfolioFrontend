@@ -1,3 +1,4 @@
+
 import React, { memo } from "react";
 import PortfolioButton from "./PortfolioButton";
 import FieldError from "./FieldError";
@@ -40,7 +41,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, setSkills, editab
                     />
                     <PortfolioButton text="Delete" onClick={() => handleDelete(idx)} />
                   </div>
-                  <FieldError text={errors && errors[idx]?.error} />
+                  <FieldError text={errors && errors[idx]} />
                 </div>
               ) : (
                 <span className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded text-gray-700 dark:text-gray-100">{skill}</span>
@@ -55,4 +56,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ skills, setSkills, editab
     </section>
   );
 };
-export default memo(SkillsSection);
+const MemoizedSkillsSection = memo(SkillsSection);
+MemoizedSkillsSection.displayName = "SkillsSection";
+export default MemoizedSkillsSection;

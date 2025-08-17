@@ -1,3 +1,4 @@
+
 import React, { memo } from "react";
 import PortfolioButton from "./PortfolioButton";
 import CommonTextInput from "./CommonTextInput";
@@ -83,7 +84,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience, setEx
               <>
                 <div className="font-bold text-gray-700 dark:text-gray-200">{exp.jobTitle} @ {exp.company}</div>
                 <div className="text-xs text-gray-400 dark:text-gray-400 mb-1">{exp.from} - {exp.to}</div>
-                <div className="text-gray-600 dark:text-gray-300">{exp.description}</div>
+                <div className="text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: exp.description }} />
               </>
             )}
           </div>
@@ -95,4 +96,6 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience, setEx
     </section>
   );
 };
-export default memo(ExperienceSection);
+const MemoizedExperienceSection = memo(ExperienceSection);
+MemoizedExperienceSection.displayName = "ExperienceSection";
+export default MemoizedExperienceSection;

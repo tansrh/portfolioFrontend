@@ -36,8 +36,8 @@ const Signin: React.FC = () => {
             else{
                 dispatch(addToast({ message: result.message, isError: true }));
             }
-        } catch (err) {
-            console.error("Sign-in error:", err);
+        } catch (err: any) {
+            dispatch(addToast({ message: `Sign-in failed. Error: '${err.message}'`, isError: true }));
         }
 
     };
@@ -81,7 +81,7 @@ const Signin: React.FC = () => {
             </FormButton>
             <div className="flex justify-between items-center">
             <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Don't have an account? <Link href="/signup" className="underline hover:text-black dark:hover:text-white">Sign up</Link>
+                Don&apos;t have an account? <Link href="/signup" className="underline hover:text-black dark:hover:text-white">Sign up</Link>
             </div>
             <div className="text-center text-sm mt-2">
                 <Link href="/forgot-password" className="text-blue-600 hover:underline">Forgot Password?</Link>

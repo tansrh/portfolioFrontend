@@ -3,11 +3,14 @@ import { Provider, useSelector } from 'react-redux';
 import store, { useAppDispatch } from '@/store/store';
 import { useEffect } from 'react';
 import { autoLoginThunk } from '@/store/auth/authThunks';
+import { usePathname } from 'next/navigation';
 
 function AutoLogin() {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
   useEffect(() => {
-    dispatch(autoLoginThunk());
+    if(!pathname.startsWith('/u')){
+    dispatch(autoLoginThunk());}
   }, [dispatch]);
   return null;
 }

@@ -1,6 +1,8 @@
+
 import React from "react";
 import CommonTextInput from "./CommonTextInput";
 import CommonTextarea from "./CommonTextarea";
+import CommonImage from "./CommonImage";
 
 interface PersonalDetailsSectionProps {
   personalDetails: {
@@ -40,7 +42,7 @@ const PersonalDetailsSection: React.FC<PersonalDetailsSectionProps> = ({ persona
           <CommonTextInput
             type="url"
             placeholder="Image URL (optional)"
-            value={personalDetails.imageUrl || ""}
+            value={personalDetails?.imageUrl || ""}
             onChange={e => handleChange("imageUrl", e.target.value)}
             error={errors && errors.imageUrl}
           />
@@ -53,12 +55,12 @@ const PersonalDetailsSection: React.FC<PersonalDetailsSectionProps> = ({ persona
         </div>
       ) : (
         <>
-          {personalDetails.imageUrl && (
-            <img src={personalDetails.imageUrl} alt="Profile" className="mb-2 w-24 h-24 object-cover rounded-full" />
+          {personalDetails?.imageUrl && (
+            <CommonImage src={personalDetails.imageUrl} alt="Profile" className="mb-2 w-24 h-24 object-cover rounded-full" />
           )}
           <div className="font-bold text-gray-700 dark:text-gray-200 text-lg">{personalDetails.name}</div>
           <div className="text-gray-500 dark:text-gray-400 mb-1">{personalDetails.location}</div>
-          <div className="text-gray-600 dark:text-gray-300">{personalDetails.about}</div>
+          <div className="text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: personalDetails.about }} />
         </>
       )}
     </section>

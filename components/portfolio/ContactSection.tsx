@@ -28,7 +28,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact, setContact, ed
       <div className="flex flex-col gap-2 mt-2">
         {editable ? (
           <>
-            {Object.entries(contact).map(([key, value]) => (
+            {Object.entries(contact).map(([key, value], idx) => (
               <div key={key} className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <input
@@ -54,7 +54,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact, setContact, ed
                   />
                   <PortfolioButton text="Delete" onClick={() => handleDelete(key)} />
                 </div>
-                <FieldError text={errors && errors[key]} />
+                <FieldError text={errors && errors[idx]} />
               </div>
             ))}
             <PortfolioButton text="Add Field" onClick={handleAdd} className="mt-2 w-fit" />
@@ -63,7 +63,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact, setContact, ed
           <>
             {Object.entries(contact).map(([key, value]) => (
               <div key={key} className="text-gray-700 dark:text-gray-200">
-                <span className="font-semibold">{key}:</span> {value}
+                <span className="font-semibold">{key}:</span><a href={value} target="_blank" rel="noopener noreferrer" className="hover:underline ml-1 text-blue-300" >{value}</a>
               </div>
             ))}
           </>
@@ -73,4 +73,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact, setContact, ed
   );
 };
 
-export default memo(ContactSection);
+const MemoizedContactSection = memo(ContactSection);
+MemoizedContactSection.displayName = "ContactSection";
+export default MemoizedContactSection;

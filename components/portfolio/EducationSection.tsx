@@ -81,7 +81,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education, setEduca
                             <>
                                 <div className="font-bold text-gray-700 dark:text-gray-200">{edu.degree} @ {edu.institution}</div>
                                 <div className="text-xs text-gray-400 dark:text-gray-400 mb-1">{edu.from} - {edu.to}</div>
-                                <div className="text-gray-600 dark:text-gray-300">{edu.achievements}</div>
+                                <div className="text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: edu.achievements }} />
                             </>
                         )}
                     </div>
@@ -94,4 +94,6 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education, setEduca
     );
 };
 
-export default memo(EducationSection);
+const MemoizedEducationSection = memo(EducationSection);
+MemoizedEducationSection.displayName = "EducationSection";
+export default MemoizedEducationSection;

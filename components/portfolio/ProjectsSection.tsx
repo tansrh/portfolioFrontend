@@ -1,7 +1,9 @@
+
 import React, { memo } from "react";
 import PortfolioButton from "./PortfolioButton";
 import CommonTextInput from "./CommonTextInput";
 import CommonTextarea from "./CommonTextarea";
+import CommonImage from "./CommonImage";
 
 interface Project {
   name: string;
@@ -12,7 +14,7 @@ interface Project {
 
 interface ProjectsSectionProps {
   projects: Array<Project>;
-  setProjects: React.Dispatch<React.SetStateAction<Array<Project>>>;
+  setProjects: React.Dispatch<React.SetStateAction<any>>;
   editable?: boolean;
   errors?: any;
 }
@@ -75,10 +77,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, setProjects
             ) : (
               <>
                 {project.imageUrl && (
-                  <img src={project.imageUrl} alt="Project" className="mb-2 w-24 h-24 object-cover rounded" />
+                  <CommonImage src={project.imageUrl} alt="Project" className="mb-2 w-24 h-24 object-cover rounded" />
                 )}
                 <div className="font-bold text-gray-700 dark:text-gray-200">{project.name}</div>
-                <div className="text-gray-600 dark:text-gray-300 mb-1">{project.description}</div>
+                <div className="text-gray-600 dark:text-gray-300 mb-1" dangerouslySetInnerHTML={{ __html: project.description }} />
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">{project.link}</a>
               </>
             )}
@@ -91,4 +93,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, setProjects
     </section>
   );
 };
-export default memo(ProjectsSection);
+const MemoizedProjectsSection = memo(ProjectsSection);
+MemoizedProjectsSection.displayName = "ProjectsSection";
+export default MemoizedProjectsSection;

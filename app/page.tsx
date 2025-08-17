@@ -11,7 +11,7 @@ export default function Home() {
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
           Create a beautiful, personalized portfolio to showcase your experiences, projects, and skills. Get your own unique link in seconds. No coding required.
         </p>
-        <Link href="/signup">
+        <Link href="/dashboard">
           <Button className="px-8 py-3 text-lg font-semibold rounded shadow bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition cursor-pointer">
             Get Started
           </Button>
