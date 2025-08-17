@@ -116,7 +116,7 @@ const UserProfileMenu: React.FC = () => {
             dispatch(setUser(null));
             router.replace("/");
             router.refresh();
-
+            document.cookie = "auth_token=;";
         } else {
             dispatch(addToast({ message: result.message, isError: true }));
         }
