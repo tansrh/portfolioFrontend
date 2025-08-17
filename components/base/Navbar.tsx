@@ -115,6 +115,7 @@ const UserProfileMenu: React.FC = () => {
             dispatch(addToast({ message: result.message }));
             dispatch(setUser(null));
             router.replace("/");
+            router.refresh();
 
         } else {
             dispatch(addToast({ message: result.message, isError: true }));
