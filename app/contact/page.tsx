@@ -26,7 +26,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 flex justify-center">
+    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 flex justify-center mt-5">
       <div className="max-w-2xl mx-auto p-8 bg-white dark:bg-neutral-900 rounded-lg shadow-lg h-max">
         <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
           Contact Us

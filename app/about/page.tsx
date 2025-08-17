@@ -4,7 +4,7 @@ import React from "react";
 
 export default function About() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 flex items-center justify-center">
+    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 flex items-center justify-center mt-5">
       <div className="max-w-3xl mx-auto p-8 bg-white dark:bg-neutral-900 rounded-lg shadow-lg">
         <h1 className="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white tracking-tight">
           Empowering Your Digital Portfolio Journey
