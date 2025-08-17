@@ -11,15 +11,16 @@ export default function FadeInSection({ children }: { children: React.ReactNode 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !isVisible) {
           setIsVisible(true);
-        //   observer.disconnect();
+          // observer.disconnect();
         }
-        else {
-          setIsVisible(entry.isIntersecting);
-        }
+        // else if(isVisible) {
+        //   setIsVisible(false);
+        // }
+        
       },
-      { threshold: 0.4 }
+      { threshold: 0.2 }
     );
 
     observer.observe(node);
