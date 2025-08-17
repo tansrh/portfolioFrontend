@@ -147,7 +147,7 @@ const UserProfileMenu: React.FC = () => {
                             </div>
                             <button
                                 onClick={handleSignout}
-                                className="w-full py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition"
+                                className="w-full py-2 px-4 rounded bg-black text-white dark:bg-white dark:text-black font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition cursor-pointer"
                             >
                                 Signout
                             </button>
