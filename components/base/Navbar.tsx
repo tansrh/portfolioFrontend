@@ -111,6 +111,7 @@ const UserProfileMenu: React.FC = () => {
         const result: any = await dispatch(signoutThunk()).unwrap();
         if (result.status === 200) {
             dispatch(addToast({ message: result.message }));
+            window.location.href = "/";
         } else {
             dispatch(addToast({ message: result.message, isError: true }));
         }
