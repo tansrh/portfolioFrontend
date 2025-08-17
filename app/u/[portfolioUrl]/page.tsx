@@ -3,7 +3,7 @@ import PublicPortfolioMain from "@/components/U/PublicPortfolioMain";
 import { useGetUPortfolioQuery } from "@/store/services/uApi";
 import { use, Suspense, useEffect } from "react";
 import Head from "next/head";
-import { usePortfolio } from "./layout";
+import { usePortfolio } from "./ClientPortfolioProvider";
 
 export default function Page({ params }: { params: Promise<{ portfolioUrl: string }> }) {
     const { portfolioUrl } = use(params);

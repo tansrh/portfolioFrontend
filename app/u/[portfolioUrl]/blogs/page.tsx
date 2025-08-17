@@ -2,7 +2,7 @@
 import { useGetUPortfolioQuery } from "@/store/services/uApi";
 import BlogCard from "./_PublicBlogCard";
 import React, { use, useEffect } from "react";
-import { usePortfolio } from "../layout";
+import { usePortfolio } from "../ClientPortfolioProvider";
 export default function BlogsPage({ params }: { params: Promise<{ portfolioUrl: string }> }) {
   const { portfolioUrl } = use(params);
   // const { data, isLoading, error } = useGetUPortfolioQuery(portfolioUrl);
