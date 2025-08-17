@@ -1,11 +1,12 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, memo } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { signoutThunk } from "@/store/auth/authThunks";
 import { addToast } from "@/store/toast/toastSlice";
+import { setUser } from "@/store/auth/authSlice";
 interface NavItemProps {
     href: string;
     label: string;
@@ -96,7 +97,7 @@ const UserProfileMenu: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [open, setOpen] = React.useState(false);
     const menuRef = React.useRef<HTMLDivElement>(null);
-
+    const router = useRouter();
     useEffect(() => {
         function handleClick(e: MouseEvent) {
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -109,9 +110,12 @@ const UserProfileMenu: React.FC = () => {
 
     const handleSignout = async () => {
         const result: any = await dispatch(signoutThunk()).unwrap();
+
         if (result.status === 200) {
             dispatch(addToast({ message: result.message }));
-            window.location.href = "/";
+            dispatch(setUser(null));
+            router.replace("/");
+
         } else {
             dispatch(addToast({ message: result.message, isError: true }));
         }
