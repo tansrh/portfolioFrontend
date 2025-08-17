@@ -17,7 +17,7 @@ export default function PortfolioDetailsPage() {
   }, [selectedPortfolio, router]);
   dispatch(blogsApi.endpoints.getBlogs.initiate(selectedPortfolio?.id || ""));
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 bg-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300">
+    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 bg-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 mt-8">
       <div className="max-w-2xl mx-auto py-10 px-4">
         {selectedPortfolio ? (
           <PortfolioDetailPage portfolio={selectedPortfolio} />

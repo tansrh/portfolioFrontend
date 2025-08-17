@@ -58,7 +58,7 @@ const AddBlogPage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full dark:bg-black">
+    <div className="min-h-screen w-full dark:bg-black mt-8">
       <h1 className="text-3xl font-bold mb-6 text-center pt-6">Add New Blog</h1>
       <CommonBlog
         blog={initialBlog}

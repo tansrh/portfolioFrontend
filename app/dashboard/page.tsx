@@ -19,7 +19,7 @@ export default function DashboardPage() {
   //   dispatch(getProtfoliosThunk());
   // }, [dispatch]);
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 bg-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300">
+    <main className="min-h-screen bg-gradient-to-b from-gray-350 to-gray-50 bg-gray-50 dark:from-black dark:to-gray-900 transition-colors duration-300 mt-8">
       <div className="max-w-3xl mx-auto py-10 px-4">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Your Portfolios</h1>

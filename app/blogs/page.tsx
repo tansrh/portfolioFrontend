@@ -70,7 +70,7 @@ const BlogsPage = () => {
     dispatch(getBlogsThunk(selectedPortfolioId!));
   }, [dispatch, selectedPortfolioId])
   return (
-    <div className="min-h-screen w-full dark:bg-black">
+    <div className="min-h-screen w-full dark:bg-black mt-8">
       <section className="max-w-[90vw] mx-auto p-4 md:p-8">
         <div className="flex flex-wrap justify-between items-center mb-6 px-4 md:px-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Blogs</h1>

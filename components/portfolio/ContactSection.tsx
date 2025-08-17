@@ -29,7 +29,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ contact, setContact, ed
         {editable ? (
           <>
             {Object.entries(contact).map(([key, value], idx) => (
-              <div key={key} className="flex flex-col">
+              <div key={idx} className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <input
                     className="px-2 py-1 rounded border dark:bg-gray-900 dark:text-gray-100 w-1/3"

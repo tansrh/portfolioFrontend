@@ -50,7 +50,7 @@ const BlogReadPage = () => {
     };
 
   return (
-    <div className="min-h-screen w-full dark:bg-black">
+    <div className="min-h-screen w-full dark:bg-black mt-8">
       <CommonBlog blog={selectedBlog} currentUserId={currentUserId} onSave={handleSave} />
     </div>
   );
