@@ -7,7 +7,7 @@ export const contactApi = api.injectEndpoints({
                 url: "/contact",
                 method: "POST",
                 body: data,
-                validateStatus: (response, result) => {
+                validateStatus: (response: any, result: any) => {
                     return response.status === 200;
                 }
             }),
