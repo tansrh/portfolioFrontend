@@ -43,7 +43,7 @@ const Signin: React.FC = () => {
     };
     // const [state, formAction, isPending] = useActionState( signInAction, inititalState);
     const { data: auth, loading: isPending, errors } = useSelector((state: any) => state.auth);
-    if(auth.user){
+    if(auth?.user){
         redirect('/'); // Redirect to home if user is already signed in
     }
     return (
