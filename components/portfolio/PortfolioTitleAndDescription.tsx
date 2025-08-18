@@ -30,7 +30,7 @@ const PortfolioTitleAndDescription: React.FC<PortfolioTitleAndDescriptionProps> 
                 setPortfolioTitleAndDescription({
                   ...portfolioTitleAndDescription,
                   title: e.target.value,
-                  updatedAt: portfolioTitleAndDescription.updatedAt ?? ""
+                  // updatedAt: portfolioTitleAndDescription.updatedAt ?? "" 
                 })
               }
               placeholder="Portfolio Title"
@@ -48,7 +48,7 @@ const PortfolioTitleAndDescription: React.FC<PortfolioTitleAndDescriptionProps> 
                 setPortfolioTitleAndDescription({
                   ...portfolioTitleAndDescription,
                   description: e.target.value,
-                  updatedAt: portfolioTitleAndDescription.updatedAt ?? ""
+                  // updatedAt: portfolioTitleAndDescription.updatedAt ?? ""
                 })
               }
               placeholder="Describe your portfolio..."

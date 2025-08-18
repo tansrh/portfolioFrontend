@@ -5,7 +5,7 @@ import { signInThunk } from "@/store/auth/authThunks";
 import { useActionState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch, type AppDispatch } from "@/store/store";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { setToastMessage } from "@/store/toast/toastMsgSlice";
 import Link from "next/link";
 import { addToast } from "@/store/toast/toastSlice";
@@ -42,7 +42,10 @@ const Signin: React.FC = () => {
 
     };
     // const [state, formAction, isPending] = useActionState( signInAction, inititalState);
-    const { loading: isPending, errors } = useSelector((state: any) => state.auth);
+    const { data: auth, loading: isPending, errors } = useSelector((state: any) => state.auth);
+    if(auth.user){
+        redirect('/'); // Redirect to home if user is already signed in
+    }
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-md bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-md p-8 flex flex-col gap-6">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">Sign In</h1>

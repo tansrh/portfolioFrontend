@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/store/store";
 import { setToastMessage } from "@/store/toast/toastMsgSlice";
 import { addToast } from "@/store/toast/toastSlice";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useActionState } from "react";
 import { useFormState } from "react-dom";
 import { useSelector } from "react-redux";
@@ -28,24 +28,27 @@ const Signup: React.FC = () => {
             password: formData.get("password") as string,
             confirmPassword: formData.get("confirmPassword") as string,
         };
-        try{
+        try {
             const result = await dispatch(signUpThunk(values)).unwrap();
             console.log("Sign-up result:", result);
             // dispatch(setToastMessage(result.message));
-            
+
             if (result.status === 200) {
                 dispatch(addToast({ message: result.message }));
                 router.push("/signin");
             }
-            else{
+            else {
                 dispatch(addToast({ message: result.message, isError: true }));
             }
         } catch (error) {
             console.error("Sign-up error:", error);
         }
-        
+
     };
-    const { loading: isPending, errors } = useSelector((state: any) => state.auth);
+    const { data: auth, loading: isPending, errors } = useSelector((state: any) => state.auth);
+    if (auth.user) {
+        redirect('/'); // Redirect to home if user is already signed in
+    }
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-md p-8 flex flex-col gap-6">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">Sign Up</h1>
@@ -109,7 +112,7 @@ const Signup: React.FC = () => {
                     <span className="text-red-500 text-xs mt-1">{errors.confirmPassword}</span>
                 )}
             </div>
-            <FormButton type="submit"  isPending={isPending}>
+            <FormButton type="submit" isPending={isPending}>
                 Sign Up
             </FormButton>
             <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
