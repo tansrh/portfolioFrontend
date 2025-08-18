@@ -32,7 +32,7 @@ const PortfolioUrlInput: React.FC<PortfolioUrlInputProps> = ({
     ) : (
       <div className="text-gray-700 dark:text-gray-200 text-lg break-all">
         <Link
-          href={value}
+          href={`/u/${encodeURIComponent(value)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 dark:text-blue-400 underline"

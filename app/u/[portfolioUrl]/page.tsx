@@ -20,8 +20,6 @@ export default function Page({ params }: { params: Promise<{ portfolioUrl: strin
     if (error || !data?.portfolio) return <div>Portfolio not found.</div>;
 
     return (
-        <Suspense fallback={<div>Loading portfolio...</div>}>
             <PublicPortfolioMain portfolio={data.portfolio} />
-        </Suspense>
     );
 }

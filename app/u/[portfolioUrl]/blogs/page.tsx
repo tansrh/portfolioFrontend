@@ -20,11 +20,17 @@ export default function BlogsPage({ params }: { params: Promise<{ portfolioUrl: 
   return (
     <main className="mx-auto py-10 px-4">
       <h1 className="text-4xl font-bold mb-8 mt-5">Blogs</h1>
-      <div className="flex flex-row w-full flex-wrap gap-8 items-center justify-center content-start">
-        {data.blogs.map((blog: any) => (
-          <BlogCard key={blog.id} blog={blog} />
-        ))}
-      </div>
+      {data.blogs.length === 0 ? (
+        <div className="text-gray-500 text-lg text-center w-full py-12">
+          No blogs are available.
+        </div>
+      ) : (
+        <div className="flex flex-row w-full flex-wrap gap-8 items-center justify-center content-start">
+          {data.blogs.map((blog: any) => (
+            <BlogCard key={blog.id} blog={blog} />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

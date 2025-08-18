@@ -11,41 +11,35 @@ export default function PublicProjectsSection({ projects }: { projects: any[] })
           {projects.map((project, idx) => (
             <div
               key={idx}
-              className="min-w-[320px] max-w-xs flex-shrink-0 bg-white dark:bg-black rounded-lg shadow-lg dark:shadow-[0_4px_32px_0_rgba(255,255,255,0.16)] p-6 flex flex-col h-[420px] transition-transform duration-200 hover:scale-[1.02] overflow-y-scroll"
+              className="min-w-[320px] max-w-xs flex-shrink-0 bg-white dark:bg-black rounded-lg shadow-lg dark:shadow-[0_4px_32px_0_rgba(255,255,255,0.16)] p-4 flex flex-col h-[420px] transition-transform duration-200 hover:scale-[1.02] overflow-y-auto"
             >
               {project.imageUrl && (
-                <div className="flex-1 flex items-center justify-center mb-3">
+                <div className="relative w-full h-40 mb-3">
                   <Image
                     src={project.imageUrl}
                     alt={project.name}
-                    width={320}
-                    height={160}
-                    className="w-full h-full object-cover rounded-lg"
+                    fill
+                    className="object-cover rounded-lg"
                   />
                 </div>
               )}
-              <div>
+              <div className="flex-1 flex flex-col">
                 <h3 className="text-xl font-semibold mb-2 truncate" title={project.name}>{project.name}</h3>
-                {project.link && (<>
+                {project.link && (
+                  <>
                     <span className="text-xs">See: </span>
-                  <Link
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline text-sm"
-                  >
-                    {project.link}
-                  </Link>
+                    <Link
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-sm break-all block"
+                    >
+                      {project.link}
+                    </Link>
                   </>
                 )}
                 <div
-                  className="mt-2 text-gray-700 dark:text-gray-300 text-sm leading-snug overflow-hidden text-ellipsis"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: "vertical",
-                    maxHeight: "4.5em"
-                  }}
+                  className="mt-2 text-gray-700 dark:text-gray-300 text-sm leading-snug overflow-y-auto h-30 rounded"
                   dangerouslySetInnerHTML={{ __html: project.description || "" }}
                 />
               </div>

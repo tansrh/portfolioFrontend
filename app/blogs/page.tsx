@@ -7,7 +7,7 @@ import { RootState, useAppDispatch } from "@/store/store";
 import { getBlogsThunk } from "@/store/blogs/blogsThunk";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useGetBlogsQuery } from "@/store/services/blogsApi";
 
 const initialBlogs: Blog[] = [
@@ -56,19 +56,19 @@ const initialBlogs: Blog[] = [
 ];
 
 const BlogsPage = () => {
-  const { blogs } = useSelector((state: RootState) => state.blogs);
+  // const { blogs } = useSelector((state: RootState) => state.blogs);
   // const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const selectedPortfolioId = useSelector((state: RootState) => state.portfolio.selectedPortfolio?.id);
   // const { loading } = useSelector((state: RootState) => state.blogs);
-  const { isLoading: loading, isFetching } = useGetBlogsQuery(selectedPortfolioId!);
+  const { data: blogs, isLoading: loading, isFetching } = useGetBlogsQuery(selectedPortfolioId!);
   if(!selectedPortfolioId) {
-      router.replace("/dashboard");
+      redirect("/dashboard");
   }
-  useEffect(()=>{
-    dispatch(getBlogsThunk(selectedPortfolioId!));
-  }, [dispatch, selectedPortfolioId])
+  // useEffect(()=>{
+  //   dispatch(getBlogsThunk(selectedPortfolioId!));
+  // }, [dispatch, selectedPortfolioId])
   return (
     <div className="min-h-screen w-full dark:bg-black mt-8">
       <section className="max-w-[90vw] mx-auto p-4 md:p-8">
@@ -86,10 +86,10 @@ const BlogsPage = () => {
           </Link>
         </div>
         <div className="flex flex-wrap justify-center gap-4 px-4 md:px-8">
-          {blogs.length === 0 ? (
+          {blogs?.length === 0 ? (
             <div className="w-full text-center text-gray-500 dark:text-gray-400 py-12 text-lg font-medium">No blogs found</div>
           ) : (
-            blogs.map(blog => (
+            blogs?.map(blog => (
               <BlogCard key={blog.id} blog={blog as any} />
             ))
           )}

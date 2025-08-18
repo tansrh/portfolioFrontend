@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { RootState, useAppDispatch } from "@/store/store";
 import PortfolioDetailPage from "@/components/ui/PortfolioDetails";
 import { blogsApi } from "@/store/services/blogsApi";
@@ -12,7 +12,7 @@ export default function PortfolioDetailsPage() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!selectedPortfolio) {
-      router.replace("/dashboard");
+      redirect("/dashboard");
     }
   }, [selectedPortfolio, router]);
   dispatch(blogsApi.endpoints.getBlogs.initiate(selectedPortfolio?.id || ""));

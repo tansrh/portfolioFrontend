@@ -1,7 +1,7 @@
 
 'use client';
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import FormButton from "@/components/common/FormButton";
 import PersonalDetailsSection from "@/components/portfolio/PersonalDetailsSection";
 import ExperienceSection from "@/components/portfolio/ExperienceSection";
@@ -70,7 +70,7 @@ export default function AddPortfolioPage() {
       const resultAction: any = await dispatch(createPortfolioThunk(formData));
       if (createPortfolioThunk.fulfilled.match(resultAction)) {
         setLoading(false);
-        router.replace("/dashboard");
+        redirect("/dashboard");
       } else {
         setLoading(false);
         dispatch(addToast({ message: resultAction.payload?.message || "Failed to create portfolio.", isError: true }));
