@@ -6,6 +6,7 @@ import { createBlogThunk } from "@/store/blogs/blogsThunk";
 import { useSelector } from "react-redux";
 import { addToast } from "@/store/toast/toastSlice";
 import CommonBlog, { BlogType } from "@/components/portfolio/CommonBlog";
+import { blogsApi } from "@/store/services/blogsApi";
 const initialBlog: BlogType = {
   id: "",
   title: "",
@@ -52,6 +53,7 @@ const AddBlogPage = () => {
           isError: false,
         })
       );
+      dispatch(blogsApi.endpoints.getBlogs.initiate(selectedPortfolioId || ""));
 
     }
     router.replace("/blogs");

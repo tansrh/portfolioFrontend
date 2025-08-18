@@ -8,6 +8,7 @@ import { updateBlogThunk } from "@/store/blogs/blogsThunk";
 import { addToast } from "@/store/toast/toastSlice";
 import { useRouter } from "next/navigation";
 import { setSelectedBlog } from "@/store/blogs/blogsSlice";
+import { blogsApi } from "@/store/services/blogsApi";
 
 const BlogReadPage = () => {
   const selectedBlog = useSelector((state: RootState) => state.blogs.selectedBlog);
@@ -35,14 +36,16 @@ const BlogReadPage = () => {
       if (updateBlogThunk.rejected.match(resultAction)) {
         dispatch(addToast({
           isError: true,
-          message: (resultAction.payload as any)?.message || "Failed to create blog."
+          message: (resultAction.payload as any)?.message || "Failed to update blog."
         }));
       } else {
        await dispatch(addToast({
-          message: resultAction.payload?.message || "Blog created successfully.",
+          message: resultAction.payload?.message || "Blog updated successfully.",
           isError: false
         }));
         await dispatch(setSelectedBlog(resultAction.payload));
+        dispatch(blogsApi.endpoints.getBlogs.initiate(selectedBlog.portfolioId || ""));
+        
         if(currentUserId?.toString() == selectedBlog?.userId?.toString()) {
         router.replace("/blogs");
         }

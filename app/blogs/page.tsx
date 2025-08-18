@@ -86,7 +86,7 @@ const BlogsPage = () => {
           </Link>
         </div>
         <div className="flex flex-wrap justify-center gap-4 px-4 md:px-8">
-          {blogs?.length === 0 ? (
+          {(!blogs) ||( blogs?.length === 0) ? (
             <div className="w-full text-center text-gray-500 dark:text-gray-400 py-12 text-lg font-medium">No blogs found</div>
           ) : (
             blogs?.map(blog => (
