@@ -11,6 +11,10 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     let result = await baseQuery(args, api, extraOptions);
     if (result.error && result.error.status === 401) {
         // Try to refresh the token
+        api.dispatch(addToast({
+                message: "Refreshing session. Please wait...",
+                isError: false
+            }))
         const refreshResult: any = await baseQuery({ url: '/auth/refresh', method: "POST" }, api, extraOptions);
         if (refreshResult?.data) {
             result = await baseQuery(args, api, extraOptions);
