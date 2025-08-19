@@ -1,6 +1,6 @@
 
 'use client';
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store/store";
 import CommonBlog, { BlogType } from "@/components/portfolio/CommonBlog";
@@ -12,15 +12,20 @@ import { blogsApi } from "@/store/services/blogsApi";
 
 const BlogReadPage = () => {
   const selectedBlog = useSelector((state: RootState) => state.blogs.selectedBlog);
-    const dispatch = useAppDispatch();
-    const router = useRouter();
-    const currentUserId = useSelector((state: RootState) => state.auth.user?.id);
-  if (!selectedBlog) {
-    const storedBlog = localStorage.getItem("selectedBlog");
-    if(storedBlog){
-      dispatch(setSelectedBlog(JSON.parse(storedBlog)));
-      router.refresh();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const currentUserId = useSelector((state: RootState) => state.auth.user?.id);
+  useEffect(() => {
+    if (!selectedBlog) {
+      const storedBlog = localStorage.getItem("selectedBlog");
+      if (storedBlog) {
+        dispatch(setSelectedBlog(JSON.parse(storedBlog)));
+        router.refresh();
+      }
     }
+  }, [selectedBlog, router, dispatch]);
+
+  if (!selectedBlog) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -32,30 +37,30 @@ const BlogReadPage = () => {
   }
 
   const handleSave = async (blog: any) => {
-      const resultAction = await dispatch(updateBlogThunk({
-        id: blog.id,
-        title: blog.title as string,
-        content: blog.content as string,
-        imageUrl: blog.imageUrl
+    const resultAction = await dispatch(updateBlogThunk({
+      id: blog.id,
+      title: blog.title as string,
+      content: blog.content as string,
+      imageUrl: blog.imageUrl
+    }));
+    if (updateBlogThunk.rejected.match(resultAction)) {
+      dispatch(addToast({
+        isError: true,
+        message: (resultAction.payload as any)?.message || "Failed to update blog."
       }));
-      if (updateBlogThunk.rejected.match(resultAction)) {
-        dispatch(addToast({
-          isError: true,
-          message: (resultAction.payload as any)?.message || "Failed to update blog."
-        }));
-      } else {
-       await dispatch(addToast({
-          message: resultAction.payload?.message || "Blog updated successfully.",
-          isError: false
-        }));
-        await dispatch(setSelectedBlog(resultAction.payload));
-        dispatch(blogsApi.endpoints.getBlogs.initiate(selectedBlog.portfolioId || ""));
-        
-        if(currentUserId?.toString() == selectedBlog?.userId?.toString()) {
+    } else {
+      await dispatch(addToast({
+        message: resultAction.payload?.message || "Blog updated successfully.",
+        isError: false
+      }));
+      await dispatch(setSelectedBlog(resultAction.payload));
+      dispatch(blogsApi.endpoints.getBlogs.initiate(selectedBlog.portfolioId || ""));
+
+      if (currentUserId?.toString() == selectedBlog?.userId?.toString()) {
         router.replace("/blogs");
-        }
       }
-    };
+    }
+  };
 
   return (
     <div className="min-h-screen w-full dark:bg-black mt-8">
