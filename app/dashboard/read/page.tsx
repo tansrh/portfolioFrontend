@@ -5,6 +5,7 @@ import { redirect, useRouter } from "next/navigation";
 import { RootState, useAppDispatch } from "@/store/store";
 import PortfolioDetailPage from "@/components/ui/PortfolioDetails";
 import { blogsApi } from "@/store/services/blogsApi";
+import { setSelectedPortfolio } from "@/store/portfolio/portfolioSlice";
 
 export default function PortfolioDetailsPage() {
   const selectedPortfolio = useSelector((state: RootState) => state.portfolio.selectedPortfolio);
@@ -12,7 +13,12 @@ export default function PortfolioDetailsPage() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!selectedPortfolio) {
-      redirect("/dashboard");
+      const stored = localStorage.getItem("selectedPortfolio");
+      if (stored) {
+        dispatch(setSelectedPortfolio(JSON.parse(stored)));
+      } else {
+        redirect("/dashboard");
+      }
     }
   }, [selectedPortfolio, router]);
   dispatch(blogsApi.endpoints.getBlogs.initiate(selectedPortfolio?.id || ""));

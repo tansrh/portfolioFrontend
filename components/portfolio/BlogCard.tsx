@@ -25,6 +25,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog }: BlogCardProps) => {
 
     const handleClick = () => {
         dispatch(setSelectedBlog(blog));
+        localStorage.setItem("selectedBlog", JSON.stringify(blog));
         router.push(`/blogs/read`);
         // router.push(`${pathname}/${blog.id}`);
     };

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { redirect, useRouter } from "next/navigation";
 import { useGetBlogsQuery } from "@/store/services/blogsApi";
+import { setSelectedPortfolio } from "@/store/portfolio/portfolioSlice";
 
 const initialBlogs: Blog[] = [
   {
@@ -64,7 +65,12 @@ const BlogsPage = () => {
   // const { loading } = useSelector((state: RootState) => state.blogs);
   const { data: blogs, isLoading: loading, isFetching } = useGetBlogsQuery(selectedPortfolioId!);
   if(!selectedPortfolioId) {
-      redirect("/dashboard");
+     const stored = localStorage.getItem("selectedPortfolio");
+      if (stored) {
+        dispatch(setSelectedPortfolio(JSON.parse(stored)));
+      } else {
+        redirect("/dashboard");
+      }
   }
   // useEffect(()=>{
   //   dispatch(getBlogsThunk(selectedPortfolioId!));

@@ -16,6 +16,11 @@ const BlogReadPage = () => {
     const router = useRouter();
     const currentUserId = useSelector((state: RootState) => state.auth.user?.id);
   if (!selectedBlog) {
+    const storedBlog = localStorage.getItem("selectedBlog");
+    if(storedBlog){
+      dispatch(setSelectedBlog(JSON.parse(storedBlog)));
+      router.refresh();
+    }
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

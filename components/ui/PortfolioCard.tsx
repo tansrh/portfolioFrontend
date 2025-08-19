@@ -18,6 +18,7 @@ const PortfolioCard: React.FC<PortfolioCardProps & any> = ({ id, title, descript
   const handleClick = () => {
     const selected = { id, title, description, updatedAt, ...rest };
     dispatch(setSelectedPortfolio(selected));
+    localStorage.setItem("selectedPortfolio", JSON.stringify(selected));
     router.push(`/dashboard/read`);
   };
   return (
