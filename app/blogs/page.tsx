@@ -64,6 +64,7 @@ const BlogsPage = () => {
   const selectedPortfolioId = useSelector((state: RootState) => state.portfolio.selectedPortfolio?.id);
   // const { loading } = useSelector((state: RootState) => state.blogs);
   const { data: blogs, isLoading: loading, isFetching } = useGetBlogsQuery(selectedPortfolioId!);
+  useEffect(()=>{
   if(!selectedPortfolioId) {
      const stored = localStorage.getItem("selectedPortfolio");
       if (stored) {
@@ -72,6 +73,7 @@ const BlogsPage = () => {
         redirect("/dashboard");
       }
   }
+}, [selectedPortfolioId, router, dispatch]);
   // useEffect(()=>{
   //   dispatch(getBlogsThunk(selectedPortfolioId!));
   // }, [dispatch, selectedPortfolioId])
