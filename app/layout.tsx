@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Wrapper from "@/components/base/Wrapper";
 import Modal from "@/components/common/Modal";
 import Providers from "@/components/base/Providers";
+import Toast from "@/components/common/Toast";
 const inter = Inter({ subsets: ["latin"] });
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({
       >
         <Providers>
         <Modal />
+        <Toast />
         {/* <Providers>
           <Navbar />
           <Toast />

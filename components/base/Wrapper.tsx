@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import Toast from "../common/Toast";
 
 export default function Wrapper({ children }:Readonly<{
   children: React.ReactNode;
@@ -18,7 +17,7 @@ export default function Wrapper({ children }:Readonly<{
     return (
         <>
             
-                {!hideHeaderFooter && <><Navbar navItems={navItems} /><Toast /></>}
+                {!hideHeaderFooter && <><Navbar navItems={navItems} /></>}
 
                 <main className="flex-1 w-full justify-center items-center">
                     {children}
