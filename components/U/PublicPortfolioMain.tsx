@@ -8,11 +8,13 @@ import PublicProjectsSection from "./PublicProjectsSection";
 import PublicSkillsSection from "./PublicSkillsSection";
 import PublicPersonalDetails from "./PublicPersonalDetails";
 import FadeInSection from "./FadeInSection";
+import { Timeline } from "../common/Timeline";
 
 export default function PublicPortfolioMain({ portfolio }: { portfolio: any, blogs?: any[] }) {
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-colors duration-500 mt-5" style={{ scrollBehavior: "smooth" }}>
-      <main className="max-w-4xl mx-auto py-10 px-4 space-y-10 border-l-2 border-l-black dark:border-l-white">
+      <main className="max-w-4xl mx-auto py-10 px-4 space-y-10 ">
+        <Timeline>
          <FadeInSection>
         <PublicPersonalDetails personalDetails={portfolio.personalDetails} />
         </FadeInSection>
@@ -37,6 +39,7 @@ export default function PublicPortfolioMain({ portfolio }: { portfolio: any, blo
         <FadeInSection>
         <PublicContactSection contact={portfolio.contact} />
         </FadeInSection>
+        </Timeline>
       </main>
     </div>
   );
