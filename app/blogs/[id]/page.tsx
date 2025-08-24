@@ -8,8 +8,11 @@ import Image from "next/image";
 import { useEffect } from "react";
 import CommonImage from "@/components/portfolio/CommonImage";
 import { formatDayMonthYear } from "@/lib/utils";
+import { JoditLoader } from "@/components/portfolio/CommonJoditLoader";
 
-const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
+const JoditEditor = dynamic(() => import('jodit-react'), { loading: () => (
+   <JoditLoader/>
+  ),ssr: false });
 const fetchBlog = async (id: string) => {
   return {
     id,

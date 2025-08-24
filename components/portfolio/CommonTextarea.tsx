@@ -1,7 +1,14 @@
-const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
+import dynamic from "next/dynamic";
+import { JoditLoader } from "./CommonJoditLoader";
+const JoditEditor = dynamic(() => import('jodit-react'), {
+  ssr: false,
+  loading: () => (
+   <JoditLoader/>
+  ),
+});
 import React, { useRef, useState } from "react";
 import FieldError from "./FieldError";
-import dynamic from "next/dynamic";
+
 
 interface CommonTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;

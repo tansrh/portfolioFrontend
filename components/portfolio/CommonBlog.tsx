@@ -8,8 +8,9 @@ import { formatDayMonthYear, validateFormFields } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import CommonImage from "./CommonImage";
 import PortfolioButton from "./PortfolioButton";
+import { JoditLoader } from "./CommonJoditLoader";
 
-const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
+const JoditEditor = dynamic(() => import('jodit-react'), { loading: () => <JoditLoader />, ssr: false });
 
 export interface BlogType {
   id: string;
