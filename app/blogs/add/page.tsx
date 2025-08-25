@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { addToast } from "@/store/toast/toastSlice";
 import CommonBlog, { BlogType } from "@/components/portfolio/CommonBlog";
 import { blogsApi } from "@/store/services/blogsApi";
+import { useRequireAuth } from "@/app/hooks/useRequireAuth";
 const initialBlog: BlogType = {
   id: "",
   title: "",
@@ -16,6 +17,7 @@ const initialBlog: BlogType = {
 };
 const AddBlogPage = () => {
   const router = useRouter();
+  useRequireAuth();
   const dispatch = useAppDispatch();
   const selectedPortfolioId = useSelector((state: RootState) => state.portfolio.selectedPortfolio?.id);
   const { loading } = useSelector((state: RootState) => state.blogs);

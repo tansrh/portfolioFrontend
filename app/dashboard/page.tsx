@@ -2,13 +2,13 @@
 import React, { useEffect } from "react";
 import PortfolioCard from "@/components/ui/PortfolioCard";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import { getProtfoliosThunk } from "@/store/portfolio/portfolioThunk";
 import { RootState, useAppDispatch } from "@/store/store";
 import { useGetPortfoliosQuery } from "@/store/services/portfolioApi";
 
 export default function DashboardPage() {
   const dispatch = useAppDispatch();
+
   // const { portfolios, loading, errors, message } = useSelector((state: RootState) => state.portfolio);
     const { data: portfolios, isLoading: loading, error } = useGetPortfoliosQuery(undefined, {
     refetchOnMountOrArgChange: true,

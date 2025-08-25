@@ -18,9 +18,11 @@ import { useAppDispatch } from "@/store/store";
 import { createPortfolioThunk } from "@/store/portfolio/portfolioThunk";
 import { validationConstants } from "@/configs/validationConfigs";
 import PortfolioUrl from "@/components/portfolio/PortfolioUrl";
+import { useRequireAuth } from "@/app/hooks/useRequireAuth";
 
 export default function AddPortfolioPage() {
   const dispatch = useAppDispatch();
+  useRequireAuth();
   const [personalDetails, setPersonalDetails] = useState({ name: "", about: "", location: "", imageUrl: "" });
   const [portfolioUrl, setPortfolioUrl] = useState("");
   const [experience, setExperience] = useState([{ jobTitle: "", company: "", from: "", to: "", description: "" }]);
