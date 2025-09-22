@@ -26,6 +26,7 @@ const Signin: React.FC = () => {
             password: formData.get("password") as string,
         };
         try {
+            console.log("Submitting sign-in form with", values);
             const result = await dispatch(signInThunk(values)).unwrap();
             // dispatch(setToastMessage(result.message));
             
